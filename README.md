@@ -62,3 +62,24 @@ open welcome.blade.php add :
 
 add div including app id too.
 
+
+----------------------------------------------------
+
+setup 
+
+---------------------------
+
+git clone https://github.com/artigeministars/laravelProductList.git
+
+add data folder for mysql 
+
+mkdir data 
+chmod -R 777 data 
+
+after that 
+
+cd laradock 
+
+docker-compose up -d nginx mysql workspace 
+
+

@@ -4,7 +4,7 @@ export const addProduct= (product) =>
 axiosInstance.post("/productss", product);
 
 export const addProductAsync = async (product) =>
-    await axiosInstance.post("/productss", product);
+    await axiosInstance.post("/products", product);
 
 export const getProducts = () =>
 axiosInstance.get("/products");

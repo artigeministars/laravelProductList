@@ -20721,8 +20721,61 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _js_hooks_fetchProducts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../js/hooks/fetchProducts */ "./resources/js/hooks/fetchProducts.js");
+/* harmony import */ var _js_services_CategoryService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../js/services/CategoryService */ "./resources/js/services/CategoryService.js");
+/* harmony import */ var _js_services_ProductService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../js/services/ProductService */ "./resources/js/services/ProductService.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  setup: function setup() {}
+  setup: function setup() {
+    var formData = (0,vue__WEBPACK_IMPORTED_MODULE_3__.reactive)({
+      product_code: '',
+      product_name: '',
+      category_id: 3,
+      quantity: '',
+      status: 1
+    });
+
+    var onSubmit = function onSubmit() {
+      Promise.resolve((0,_js_services_ProductService__WEBPACK_IMPORTED_MODULE_2__.addProductAsync)(formData)).then(function (response) {
+        if (response.status === 200) {
+          console.log("successfully added!");
+        }
+      })["catch"](function (error) {
+        if (error) {
+          console.log(error);
+        }
+      }); // ???
+
+      formData.value = {
+        product_code: '',
+        product_name: '',
+        category_id: 3,
+        quantity: '',
+        status: 1
+      };
+    };
+
+    var _useAsync = (0,_js_hooks_fetchProducts__WEBPACK_IMPORTED_MODULE_0__.useAsync)(_js_services_CategoryService__WEBPACK_IMPORTED_MODULE_1__.getCategoriesAsync),
+        dataCategories = _useAsync.data,
+        errorCategory = _useAsync.error,
+        loadingCategory = _useAsync.loading,
+        fetchCategories = _useAsync.run;
+
+    (0,vue__WEBPACK_IMPORTED_MODULE_3__.onMounted)(function () {
+      fetchCategories();
+    });
+    return {
+      dataCategories: dataCategories,
+      errorCategory: errorCategory,
+      loadingCategory: loadingCategory,
+      onSubmit: onSubmit,
+      formData: formData
+    };
+  }
 });
 
 /***/ }),
@@ -20892,11 +20945,141 @@ var _hoisted_1 = {
   "class": "collapse",
   id: "collapseProduct"
 };
+var _hoisted_2 = {
+  "class": "col-12"
+};
+var _hoisted_3 = {
+  "class": "input-group"
+};
+var _hoisted_4 = {
+  "class": "col-12"
+};
+var _hoisted_5 = {
+  "class": "input-group"
+};
+var _hoisted_6 = {
+  "class": "col-12"
+};
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<form class=\"row row-cols-lg-auto g-3 align-items-center\"><div class=\"col-12\"><div class=\"input-group\"><input type=\"text\" class=\"form-control\" id=\"inlineFormInputGroupCode\" placeholder=\"Product Code\"></div></div><div class=\"col-12\"><div class=\"input-group\"><input type=\"text\" class=\"form-control\" id=\"inlineFormInputGroupName\" placeholder=\"Product Name\"></div></div><div class=\"col-12\"><select class=\"form-select\" id=\"inlineFormSelectCategory\"><option selected>Category</option><option value=\"1\">One</option><option value=\"2\">Two</option><option value=\"3\">Three</option></select></div><div class=\"col-12\"><div class=\"input-group\"><input type=\"text\" class=\"form-control\" id=\"inlineFormInputGroupQuantity\" placeholder=\"Product Quantity\"></div></div><div class=\"col-12\"><select class=\"form-select\" id=\"inlineFormSelectCategory\"><option selected value=\"1\">Active</option><option value=\"2\">Passive</option></select></div><div class=\"col-12\"><button type=\"submit\" class=\"btn btn-primary\">Submit</button></div></form>", 1);
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+  selected: "",
+  value: "3"
+}, "Categories", -1
+/* HOISTED */
+);
 
+var _hoisted_8 = {
+  "class": "col-12"
+};
+var _hoisted_9 = {
+  "class": "input-group"
+};
+var _hoisted_10 = {
+  "class": "col-12"
+};
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+  selected: "",
+  value: "1"
+}, "Active", -1
+/* HOISTED */
+);
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+  value: "2"
+}, "Passive", -1
+/* HOISTED */
+);
+
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "col-12"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  type: "submit",
+  "class": "btn btn-primary"
+}, "Submit")], -1
+/* HOISTED */
+);
+
+var _hoisted_14 = {
+  key: 0
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [_hoisted_2]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
+    "class": "row row-cols-lg-auto g-3 align-items-center",
+    onSubmit: _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return $setup.onSubmit && $setup.onSubmit.apply($setup, arguments);
+    }, ["prevent"]))
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+    type: "text",
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return $setup.formData.product_code = $event;
+    }),
+    "class": "form-control",
+    id: "inlineFormInputGroupCode",
+    placeholder: "Product Code"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.formData.product_code, void 0, {
+    trim: true
+  }]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+    type: "text",
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $setup.formData.product_name = $event;
+    }),
+    "class": "form-control",
+    id: "inlineFormInputGroupName",
+    placeholder: "Product Name"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.formData.product_name, void 0, {
+    trim: true
+  }]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+      return $setup.formData.category_id = $event;
+    }),
+    "class": "form-select"
+  }, [_hoisted_7, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.dataCategories, function (category) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
+      value: category.id,
+      key: category.id,
+      id: 'inlineFormSelectCategory' + category.id
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(category.category_name), 9
+    /* TEXT, PROPS */
+    , ["value", "id"]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))], 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.formData.category_id, void 0, {
+    trim: true,
+    number: true
+  }]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+    type: "text",
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+      return $setup.formData.quantity = $event;
+    }),
+    "class": "form-control",
+    id: "inlineFormInputGroupQuantity",
+    placeholder: "Product Quantity"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.formData.quantity, void 0, {
+    trim: true
+  }]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+    "class": "form-select",
+    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+      return $setup.formData.status = $event;
+    }),
+    id: "inlineFormSelectCategory"
+  }, [_hoisted_11, _hoisted_12], 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.formData.status]])]), _hoisted_13], 32
+  /* HYDRATE_EVENTS */
+  )]), $setup.errorCategory ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errorCategory), 1
+  /* TEXT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64
+  /* STABLE_FRAGMENT */
+  );
 }
 
 /***/ }),
@@ -21361,7 +21544,7 @@ var addProductAsync = /*#__PURE__*/function () {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return _axios_axios__WEBPACK_IMPORTED_MODULE_1__.axiosInstance.post("/productss", product);
+            return _axios_axios__WEBPACK_IMPORTED_MODULE_1__.axiosInstance.post("/products", product);
 
           case 2:
             return _context.abrupt("return", _context.sent);

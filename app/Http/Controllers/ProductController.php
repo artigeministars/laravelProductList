@@ -39,7 +39,7 @@ class ProductController extends Controller
                 $product->product_code = $request->get("product_code");
                 $product->category_id = $request->get("category_id");
                 $product->quantity = $request->get("quantity");
-                $product->status = $request->get("1");
+                $product->status = $request->get("status");
                 $product->save();
         
                 return response()->json([

@@ -17,6 +17,22 @@ class ProductController extends Controller
        // return Product::latest()->get();
         }
 
+    public function getProductsByCategory(Request $request,$id) {
+     //   return Product::where('category_id',$id);
+     /*  
+     return Product::where('category_id', $id)
+               ->orderBy('product_name')
+               ->get();
+               */
+
+              $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
+              ->where('category_id', $id)
+              ->get(['products.*', 'categories.category_name']);
+    
+
+            return $products;
+    }
+
             public  function addProduct(Request $request){
                 $product = new Product();
                 $product->product_name = $request->get("product_name");

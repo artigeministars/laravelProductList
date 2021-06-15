@@ -12,6 +12,12 @@ axiosInstance.get("/products");
 export const getProductsAsync = async () =>
     await axiosInstance.get("/products");
 
+    export const getProductsByCategory = (id) =>
+axiosInstance.get(`/filter-products/${id}`);
+
+export const getProductsByCategoryAsync = async (id) =>
+    await axiosInstance.get(`/filter-products/${id}`);
+
 export const updateProduct = (product) =>
 axiosInstance.put(`/products/${product.id}`, product);
 

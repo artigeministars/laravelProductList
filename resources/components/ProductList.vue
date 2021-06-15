@@ -14,7 +14,7 @@
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
     <li v-for="category in dataC" :key="category.id" :id="category.id">
-      <button class="dropdown-item" type="button" @click="filterByCategory(category.id)">{{category.category_name}}</button>
+      <button class="dropdown-item" type="button" @click.prevent="filterByCategory(category.id)">{{category.category_name}}</button>
       </li>
     </ul>
 </div>
@@ -53,7 +53,7 @@ import { onMounted , ref } from "vue";
 import SearchComponent from './SearchComponent.vue';
 import AddComponent from './AddComponent.vue';
 import { useAsync } from '../js/hooks/fetchUsers';
-import { getProductsAsync } from '../js/services/ProductService';
+import { getProductsAsync, getProductsByCategoryAsync } from '../js/services/ProductService';
 import { getCategoriesAsync } from '../js/services/CategoryService';
 
 
@@ -66,23 +66,18 @@ export default {
    const { data: dataC, error: errorC, loading: loadingC, run: fetchCategories } = useAsync(getCategoriesAsync);
    
    const filterByCategory = (id) => {
-
-   }
-
-   // Look for another solution : ProductList_Another_Approach.vue
-
-/*
-    const fetchData = () => {
+   
      loading.value = true;
-     Promise.resolve(getProductsAsync()).then(response => {
+     Promise.resolve(getProductsByCategoryAsync(id)).then(response => {
      data.value = response.data;
      }).catch((error) => {
      error.value = error;
      });
        loading.value = false;
-    };
+   };
 
-*/
+   // Look for another solution : ProductList_Another_Approach.vue
+
         onMounted(() => {
 
         fetchProducts();
@@ -93,7 +88,7 @@ export default {
        // console.log("products",getProductsAsync());
         });
 
-      return { data,loading,error,dataC,loadingC,errorC };
+      return { data,loading,error,dataC,loadingC,errorC,filterByCategory };
     },
 }
 </script>

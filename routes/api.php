@@ -27,6 +27,9 @@ Route::post('v1/products', [ProductController::class, 'addProduct'])->middleware
 Route::put('v1/products', [ProductController::class, 'updateProduct'])->middleware('logger'); 
 Route::put('v1/products', [ProductController::class, 'changeStatusProduct'])->middleware('logger'); 
 
+// filters
+Route::get('v1/filter-products/{id}', [ProductController::class, 'getProductsByCategory'])->middleware('logger'); 
+
 /*
 Route::get("/v1/products", [
    // 'middleware' => 'logger',

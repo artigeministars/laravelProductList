@@ -10,7 +10,7 @@
   </div>
   
  <div class="p-2 bd-highlight">
-     <input type="text" class="form-control" placeholder="Search Products" aria-label="search" aria-describedby="search">
+     <input type="text" class="form-control" @keyup.enter="doSearch" placeholder="Search Products" aria-label="search" aria-describedby="search">
   </div>
   
 
@@ -19,9 +19,38 @@
 </div>
 </template>
 <script>
+
+import {getSearchedProductsAsync} from "../js/services/SearchService";
+import { ref , inject } from "vue";
+
 export default {
     setup() {
-        
+
+      const dataSearch = ref(null);
+      const errorSearch = ref(null);
+
+      const productData = inject('productDatas');
+      const updateProductData = inject('updateProductDatas');
+
+      const getSearchValues = (keyword) => {
+        Promise.resolve(getSearchedProductsAsync(keyword)).then(response => {
+            dataSearch.value = response.data;
+            productData.value = response.data;
+            updateProductData(response.data);
+        }).catch(error => {
+          errorSearch.value = error;
+        });
+      }
+
+        const doSearch = (event) => {
+         
+         getSearchValues(event.target.value);
+        // console.log("writtent value",event.key,event.target.value);
+         event.target.value = '';
+         console.log("search value",dataSearch);
+        }
+
+        return { doSearch,dataSearch ,errorSearch};
     },
 }
 </script>

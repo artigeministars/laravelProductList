@@ -53,7 +53,7 @@
 import { onMounted , ref } from "vue";
 import SearchComponent from './SearchComponent.vue';
 import AddComponent from './AddComponent.vue';
-import { useAsync } from '../js/hooks/fetchUsers';
+import { useAsync } from '../js/hooks/fetchProducts';
 import { getProductsAsync } from '../js/services/ProductService';
 
 export default {

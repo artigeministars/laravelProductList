@@ -20762,7 +20762,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _SearchComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchComponent.vue */ "./resources/components/SearchComponent.vue");
 /* harmony import */ var _AddComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AddComponent.vue */ "./resources/components/AddComponent.vue");
-/* harmony import */ var _js_hooks_fetchUsers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../js/hooks/fetchUsers */ "./resources/js/hooks/fetchUsers.js");
+/* harmony import */ var _js_hooks_fetchProducts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../js/hooks/fetchProducts */ "./resources/js/hooks/fetchProducts.js");
 /* harmony import */ var _js_services_ProductService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../js/services/ProductService */ "./resources/js/services/ProductService.js");
 /* harmony import */ var _js_services_CategoryService__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../js/services/CategoryService */ "./resources/js/services/CategoryService.js");
 
@@ -20777,13 +20777,13 @@ __webpack_require__.r(__webpack_exports__);
     AddComponent: _AddComponent_vue__WEBPACK_IMPORTED_MODULE_2__.default
   },
   setup: function setup() {
-    var _useAsync = (0,_js_hooks_fetchUsers__WEBPACK_IMPORTED_MODULE_3__.useAsync)(_js_services_ProductService__WEBPACK_IMPORTED_MODULE_4__.getProductsAsync),
+    var _useAsync = (0,_js_hooks_fetchProducts__WEBPACK_IMPORTED_MODULE_3__.useAsync)(_js_services_ProductService__WEBPACK_IMPORTED_MODULE_4__.getProductsAsync),
         data = _useAsync.data,
         error = _useAsync.error,
         loading = _useAsync.loading,
         fetchProducts = _useAsync.run;
 
-    var _useAsync2 = (0,_js_hooks_fetchUsers__WEBPACK_IMPORTED_MODULE_3__.useAsync)(_js_services_CategoryService__WEBPACK_IMPORTED_MODULE_5__.getCategoriesAsync),
+    var _useAsync2 = (0,_js_hooks_fetchProducts__WEBPACK_IMPORTED_MODULE_3__.useAsync)(_js_services_CategoryService__WEBPACK_IMPORTED_MODULE_5__.getCategoriesAsync),
         dataC = _useAsync2.data,
         errorC = _useAsync2.error,
         loadingC = _useAsync2.loading,
@@ -20797,9 +20797,15 @@ __webpack_require__.r(__webpack_exports__);
         error.value = error;
       });
       loading.value = false;
-    }; // Look for another solution : ProductList_Another_Approach.vue
+    };
 
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.provide)('productDatas', (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(data));
 
+    var updateData = function updateData(datas) {
+      data.value = datas;
+    };
+
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.provide)('updateProductDatas', updateData);
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
       fetchProducts();
       fetchCategories(); // fetchData();
@@ -20831,8 +20837,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _js_services_SearchService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../js/services/SearchService */ "./resources/js/services/SearchService.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  setup: function setup() {}
+  setup: function setup() {
+    var dataSearch = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
+    var errorSearch = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
+    var productData = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)('productDatas');
+    var updateProductData = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)('updateProductDatas');
+
+    var getSearchValues = function getSearchValues(keyword) {
+      Promise.resolve((0,_js_services_SearchService__WEBPACK_IMPORTED_MODULE_0__.getSearchedProductsAsync)(keyword)).then(function (response) {
+        dataSearch.value = response.data;
+        productData.value = response.data;
+        updateProductData(response.data);
+      })["catch"](function (error) {
+        errorSearch.value = error;
+      });
+    };
+
+    var doSearch = function doSearch(event) {
+      getSearchValues(event.target.value); // console.log("writtent value",event.key,event.target.value);
+
+      event.target.value = '';
+      console.log("search value", dataSearch);
+    };
+
+    return {
+      doSearch: doSearch,
+      dataSearch: dataSearch,
+      errorSearch: errorSearch
+    };
+  }
 });
 
 /***/ }),
@@ -21045,11 +21083,42 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "container mt-4"
 };
+var _hoisted_2 = {
+  "class": "row gx-2 mt-2"
+};
+var _hoisted_3 = {
+  "class": "d-flex bd-highlight mb-3"
+};
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"row gx-2 mt-2\"><div class=\"d-flex bd-highlight mb-3\"><div class=\"me-auto p-2 bd-highlight\"><button class=\"btn btn-primary\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapseProduct\" aria-expanded=\"false\" aria-controls=\"collapseProduct\"> Add Product </button></div><div class=\"p-2 bd-highlight\"><input type=\"text\" class=\"form-control\" placeholder=\"Search Products\" aria-label=\"search\" aria-describedby=\"search\"></div></div></div>", 1);
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "me-auto p-2 bd-highlight"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  "class": "btn btn-primary",
+  type: "button",
+  "data-bs-toggle": "collapse",
+  "data-bs-target": "#collapseProduct",
+  "aria-expanded": "false",
+  "aria-controls": "collapseProduct"
+}, " Add Product ")], -1
+/* HOISTED */
+);
 
+var _hoisted_5 = {
+  "class": "p-2 bd-highlight"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [_hoisted_2]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+    type: "text",
+    "class": "form-control",
+    onKeyup: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)(function () {
+      return $setup.doSearch && $setup.doSearch.apply($setup, arguments);
+    }, ["enter"])),
+    placeholder: "Search Products",
+    "aria-label": "search",
+    "aria-describedby": "search"
+  }, null, 32
+  /* HYDRATE_EVENTS */
+  )])])])]);
 }
 
 /***/ }),
@@ -21092,10 +21161,10 @@ var axiosInstance = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
 
 /***/ }),
 
-/***/ "./resources/js/hooks/fetchUsers.js":
-/*!******************************************!*\
-  !*** ./resources/js/hooks/fetchUsers.js ***!
-  \******************************************/
+/***/ "./resources/js/hooks/fetchProducts.js":
+/*!*********************************************!*\
+  !*** ./resources/js/hooks/fetchProducts.js ***!
+  \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -21415,6 +21484,58 @@ var deleteProductAsync = /*#__PURE__*/function () {
 
   return function deleteProductAsync(_x4) {
     return _ref5.apply(this, arguments);
+  };
+}();
+
+/***/ }),
+
+/***/ "./resources/js/services/SearchService.js":
+/*!************************************************!*\
+  !*** ./resources/js/services/SearchService.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getSearchedProducts": () => (/* binding */ getSearchedProducts),
+/* harmony export */   "getSearchedProductsAsync": () => (/* binding */ getSearchedProductsAsync)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _axios_axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../axios/axios */ "./resources/js/axios/axios.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+var getSearchedProducts = function getSearchedProducts(keyword) {
+  return _axios_axios__WEBPACK_IMPORTED_MODULE_1__.axiosInstance.get("/search-products/".concat(keyword));
+};
+var getSearchedProductsAsync = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(keyword) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return _axios_axios__WEBPACK_IMPORTED_MODULE_1__.axiosInstance.get("/search-products/".concat(keyword));
+
+          case 2:
+            return _context.abrupt("return", _context.sent);
+
+          case 3:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function getSearchedProductsAsync(_x) {
+    return _ref.apply(this, arguments);
   };
 }();
 

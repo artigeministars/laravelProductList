@@ -49,10 +49,10 @@
 </div>    
 </template>
 <script>
-import { onMounted , ref } from "vue";
+import { onMounted , provide ,ref } from "vue";
 import SearchComponent from './SearchComponent.vue';
 import AddComponent from './AddComponent.vue';
-import { useAsync } from '../js/hooks/fetchUsers';
+import { useAsync } from '../js/hooks/fetchProducts';
 import { getProductsAsync, getProductsByCategoryAsync } from '../js/services/ProductService';
 import { getCategoriesAsync } from '../js/services/CategoryService';
 
@@ -76,7 +76,11 @@ export default {
        loading.value = false;
    };
 
-   // Look for another solution : ProductList_Another_Approach.vue
+  provide('productDatas',ref(data));
+  const updateData = (datas) => {
+    data.value = datas;
+  }
+  provide('updateProductDatas',updateData);
 
         onMounted(() => {
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,8 +28,14 @@ Route::post('v1/products', [ProductController::class, 'addProduct'])->middleware
 Route::put('v1/products', [ProductController::class, 'updateProduct'])->middleware('logger'); 
 Route::put('v1/products', [ProductController::class, 'changeStatusProduct'])->middleware('logger'); 
 
+// categories
+Route::get('v1/categories',[CategoryController::class,'getCategories'])->middleware('logger');
+
 // filters
 Route::get('v1/filter-products/{id}', [ProductController::class, 'getProductsByCategory'])->middleware('logger'); 
+
+// search
+Route::get("v1/search-products/{keyword}",[SearchController::class,'getSearchedProducts'])->middleware('logger');
 
 /*
 Route::get("/v1/products", [
@@ -40,5 +47,3 @@ Route::resource("/v1/products",[\app\Http\Controllers\Product::class,"getProduct
 Route::put("v1/products","Product@updateProduct")->middleware('logger');
 */
 
-// categories
-Route::get('v1/categories',[CategoryController::class,'getCategories'])->middleware('logger');

@@ -75,6 +75,12 @@ add data folder for mysql
 
 mkdir data 
 chmod -R 777 data 
+chmod -R 777 bootstrap/cache storage
+cp .env.example .env
+
+cp laradock/.env.example laradock/.env
+
+NOte: if db problem occurs , change DB_HOST=mysql to DB_HOST=0.0.0.0
 
 after that 
 

@@ -1,4 +1,11 @@
 <template>
+
+<div v-if="showError" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Missing Field!</strong> You should check in on some of those fields below.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+
 <div class="collapse" id="collapseProduct">
     <form class="row row-cols-lg-auto g-3 align-items-center" @submit.prevent="onSubmit">
   <div class="col-12">
@@ -45,9 +52,12 @@
 import {useAsync } from "../js/hooks/fetchProducts";
 import { getCategoriesAsync } from '../js/services/CategoryService';
 import { addProductAsync } from "../js/services/ProductService";
-import { onMounted , reactive } from "vue";
+import { onMounted , reactive , ref , inject } from "vue";
 export default {
     setup() {
+
+   const updateProductData = inject('updateProductData');
+
 
        const formData = reactive({
             product_code: '',
@@ -57,9 +67,37 @@ export default {
             status: 1
        });
 
+       const showError = ref(false);
+
        const onSubmit = () => {
+         if(formData.product_code === ''){
+           showError.value = true;
+           return ;
+         }
+         
+         if(formData.product_name === ''){
+           showError.value = true;
+           return ;
+         }
+
+         if(formData.category_id === ''){
+           showError.value = true;
+           return ;
+         }
+         
+         if(formData.quantity === ''){
+           showError.value = true;
+           return ;
+         }
+
+          if(formData.status === ''){
+            showError.value = true;
+           return ;
+         }
+
          Promise.resolve(addProductAsync(formData)).then(response => {
            if(response.status === 200){
+             updateProductData();
              console.log("successfully added!");
            
            }
@@ -68,14 +106,8 @@ export default {
              console.log(error);
            }
          });
-           // ???
-           formData.value = {
-            product_code: '',
-            product_name: '',
-            category_id: 3,
-            quantity: '',
-            status: 1
-       };
+
+
        }
 
         const { data: dataCategories, error: errorCategory, loading: loadingCategory, run: fetchCategories } = useAsync(getCategoriesAsync);
@@ -84,7 +116,7 @@ export default {
 fetchCategories();
      });
 
-     return {dataCategories,errorCategory,loadingCategory,onSubmit,formData};
+     return {dataCategories,errorCategory,loadingCategory,onSubmit,formData,showError};
     },
 }
 </script>

@@ -80,7 +80,13 @@ export default {
   const updateData = (datas) => {
     data.value = datas;
   }
+
+  const updateProductData = () => {
+fetchProducts();
+  };
   provide('updateProductDatas',updateData);
+
+  provide('updateProductData',updateProductData);
 
         onMounted(() => {
 

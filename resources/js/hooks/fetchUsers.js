@@ -5,22 +5,20 @@ import { getProductsAsync } from "../services/ProductService";
 export const useAsync = (fn = () => {}) => {
     const data = ref(null);
     const error = ref(null);
-    const isLoading = ref(false);
+    const loading = ref(false);
 
     const run = async () => {
-        try {
-isLoading.value = true;
-data.value = await fn();
-        }
-        catch(error) {
-error.value = processError(error);
-        }
-        finally {
-isLoading.value= false;
-        }
+      
+        loading.value = true;
+        Promise.resolve(fn()).then(response => {
+        data.value = response.data;
+        }).catch((error) => {
+        error.value = processError(error);
+        });
+          loading.value = false;
     }
 
-    return { data, error, isLoading, run };
+    return { data, error, loading, run };
 
 } 
 
@@ -29,7 +27,7 @@ export const processError = (error) => {
     return error;
   }
 
-  
+  // useless for now
   export default {
       setup() {
         const { data, error, isLoading, run: fetchProducts } = useAsync( async () => {

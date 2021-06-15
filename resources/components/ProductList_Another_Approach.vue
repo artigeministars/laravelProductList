@@ -1,5 +1,5 @@
 <template>
-<div class="container bg-info">
+<div class="container  bg-info">
   <search-component></search-component>
   <add-component></add-component>
     <table v-if="data !== null" class="table table-striped table-success table-hover mt-4">
@@ -13,10 +13,10 @@
     Category
   </button>
   <ul class="dropdown-menu dropdown-menu-end">
-    <li v-for="category in dataC" :key="category.id" :id="category.id">
-      <button class="dropdown-item" type="button" @click="filterByCategory(category.id)">{{category.category_name}}</button>
-      </li>
-    </ul>
+    <li><button class="dropdown-item" type="button">Action</button></li>
+    <li><button class="dropdown-item" type="button">Another action</button></li>
+    <li><button class="dropdown-item" type="button">Something else here</button></li>
+  </ul>
 </div>
 
 </th>
@@ -34,18 +34,19 @@
      <td>{{product.quantity}}</td>
 
      <td>
-                <input type="checkbox" class="btn-check" :id="'btn-check-outlined_'+product.id" autocomplete="off">
-<label class="btn btn-outline-primary" :for="'btn-check-outlined_'+product.id">
+                <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+<label class="btn btn-outline-primary" for="btn-check-outlined">
   {{ product.status==1 ? 'Active' : 'Passive' }}
   </label>
+
      </td>
     </tr>
-    <p v-if="loading || loadingC">Loading...</p>
+
+    <p v-if="loading">Loading...</p>
 
   </tbody>
 </table>
 <p v-if="error">{{error}}</p>
-<p v-else-if="errorC">{{errorC}}</p>
 </div>    
 </template>
 <script>
@@ -54,24 +55,15 @@ import SearchComponent from './SearchComponent.vue';
 import AddComponent from './AddComponent.vue';
 import { useAsync } from '../js/hooks/fetchUsers';
 import { getProductsAsync } from '../js/services/ProductService';
-import { getCategoriesAsync } from '../js/services/CategoryService';
-
 
 export default {
   components: { SearchComponent, AddComponent },
     setup() {
-   
-   const { data, error, loading, run: fetchProducts } = useAsync(getProductsAsync);
-  
-   const { data: dataC, error: errorC, loading: loadingC, run: fetchCategories } = useAsync(getCategoriesAsync);
-   
-   const filterByCategory = (id) => {
+      
+    const data = ref(null);
+    const loading = ref(true);
+    const error = ref(null);
 
-   }
-
-   // Look for another solution : ProductList_Another_Approach.vue
-
-/*
     const fetchData = () => {
      loading.value = true;
      Promise.resolve(getProductsAsync()).then(response => {
@@ -82,18 +74,38 @@ export default {
        loading.value = false;
     };
 
-*/
+
         onMounted(() => {
 
-        fetchProducts();
-        fetchCategories();
+/*
+const { data, error, isLoading, run: fetchProducts } = useAsync( async () => {
+            const response = await getProductsAsync();
+            return response.data.data;
+        }
+        );
 
-       // fetchData();
+         const run = async () => {
+        try {
+data.value = await getProductsAsync();
+        }
+        catch(error) {
+
+        }
+        finally {
+
+        }
+    }
+*/
+ fetchData();
        console.log("ProductList component mounted!");
-       // console.log("products",getProductsAsync());
+      // console.log("products",getProductsAsync());
         });
 
-      return { data,loading,error,dataC,loadingC,errorC };
+      return {
+      data,
+      loading,
+      error
+    };
     },
 }
 </script>

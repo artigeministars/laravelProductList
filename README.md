@@ -82,6 +82,8 @@ cp laradock/.env.example laradock/.env
 
 NOte: if db problem occurs , change DB_HOST=mysql to DB_HOST=0.0.0.0
 
+if you want to db connection outside port is 3310
+
 after that 
 
 cd laradock 

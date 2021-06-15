@@ -14,7 +14,7 @@
 
   <div class="col-12">
     <select class="form-select" id="inlineFormSelectCategory">
-      <option selected>Choose...</option>
+      <option selected>Category</option>
       <option value="1">One</option>
       <option value="2">Two</option>
       <option value="3">Three</option>

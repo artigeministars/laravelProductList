@@ -4,7 +4,10 @@
   <strong>Missing Field!</strong> You should check in on some of those fields below.
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-
+<div v-if="showServerError" class="alert alert-warning alert-dismissible fade show" role="alert">
+  Product<strong> Code</strong> must be unique!
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 
 <div class="collapse" id="collapseProduct">
     <form class="row row-cols-lg-auto g-3 align-items-center" @submit.prevent="onSubmit">
@@ -68,32 +71,50 @@ export default {
        });
 
        const showError = ref(false);
+       const showServerError = ref(false);
 
        const onSubmit = () => {
          if(formData.product_code === ''){
            showError.value = true;
+          setTimeout(() => {
+              showError.value = false;
+            },4000);
            return ;
          }
          
          if(formData.product_name === ''){
            showError.value = true;
+            setTimeout(() => {
+              showError.value = false;
+            },4000);
            return ;
          }
 
          if(formData.category_id === ''){
            showError.value = true;
+           setTimeout(() => {
+              showError.value = false;
+            },4000);
            return ;
          }
          
          if(formData.quantity === ''){
            showError.value = true;
+             setTimeout(() => {
+              showError.value = false;
+            },4000);
            return ;
          }
 
           if(formData.status === ''){
             showError.value = true;
+              setTimeout(() => {
+              showError.value = false;
+            },4000);
            return ;
          }
+
+        
 
          Promise.resolve(addProductAsync(formData)).then(response => {
            if(response.status === 200){
@@ -102,8 +123,16 @@ export default {
            
            }
          }).catch(error =>{
-           if(error){
-             console.log(error);
+              if(error.response.status === 422){
+                 showServerError.value = true;
+             console.log("Product code must be unique!");
+           }
+            if(error){
+             console.log(error.message," ",error.response.message);
+            console.log(error.response.status);
+            setTimeout(() => {
+              showServerError.value = false;
+            },4000);
            }
          });
 
@@ -116,7 +145,7 @@ export default {
 fetchCategories();
      });
 
-     return {dataCategories,errorCategory,loadingCategory,onSubmit,formData,showError};
+     return {dataCategories,errorCategory,loadingCategory,onSubmit,formData,showError,showServerError};
     },
 }
 </script>

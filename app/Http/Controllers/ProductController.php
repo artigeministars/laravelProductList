@@ -34,6 +34,16 @@ class ProductController extends Controller
     }
 
             public  function addProduct(Request $request){
+
+                $validatedData = $request->validate([
+                    'product_code' => 'required|unique:products|max:255',
+                    'product_name' => 'required|max:255',
+                    'category_id'  => 'required',
+                    'quantity'  => 'required',
+                    'status'  => 'required',
+
+                ]);
+
                 $product = new Product();
                 $product->product_name = $request->get("product_name");
                 $product->product_code = $request->get("product_code");

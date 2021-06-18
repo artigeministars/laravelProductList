@@ -2,7 +2,9 @@
 Laravel Vue 3 ( composition api only) bootstrap small project. 
 Product List.
 
+-----------------------------------------------------
 laravel installation: 
+-----------------------------------------------------
 
 composer create-project laravel/laravel [project-name]
 cd [project-name]
@@ -23,7 +25,9 @@ run :
 
 docker-compose up -d nginx mysql workspace 
 
+--------------------------------------------------
 vue installation:
+--------------------------------------------------
 
 remove following from package.json :
 
@@ -47,7 +51,9 @@ import { createApp } from 'vue';
 import App from './components/App.vue'
 createApp(App).mount("#app")
 
-bootstap installation:
+-----------------------------------------------------
+bootstrap installation:
+-----------------------------------------------------
 
 npm install bootstrap jquery popper.js
 // because bootstrap written by sass
@@ -71,7 +77,7 @@ add div including app id too.
 
 setup 
 
----------------------------
+----------------------------------------------------
 
 git clone https://github.com/artigeministars/laravelProductList.git
 
@@ -80,15 +86,13 @@ add data folder for mysql
 mkdir data 
 chmod -R 777 data 
 chmod -R 777 bootstrap/cache storage
-cp .env.example .env
+cp .env .example .env
 
 cp laradock/.env.example laradock/.env
 
 NOte: if db problem occurs , change DB_HOST=mysql to DB_HOST=0.0.0.0
 
-if you want to db connection outside port is 3310
-
-after that 
+if you want to db connection outside, port is 3310, after that;
 
 cd laradock 
 

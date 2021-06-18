@@ -1,3 +1,7 @@
+markdown ```
+Laravel Vue 3 ( composition api only) bootstrap small project. 
+Product List.
+
 laravel installation: 
 
 composer create-project laravel/laravel [project-name]
